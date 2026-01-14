@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { GraduationCap, Lock, Mail } from 'lucide-react';
-import { Input } from '../components/ui/Input';
-import { Button } from '../components/ui/Button';
-import { loginUser } from '../api/auth';
+import { Input } from '../../components/ui/Input';
+import { Button } from '../../components/ui/Button';
+import { loginUser } from '../../api/auth';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
