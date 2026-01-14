@@ -4,12 +4,13 @@ import { Plus, Trash2, Pencil } from 'lucide-react';
 import { getAllStudents, deleteStudent } from '../../api/students';
 import { Button } from '../../components/ui/Button';
 import type { Student } from '../../types';
+import AddStudentModal from './AddStudentModal';
 
 const StudentList: React.FC = () => {
   const [students, setStudents] = useState<Student[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false); // <--- ADD THIS STATE
 
-  // Fetch Data on Load
   useEffect(() => {
     loadStudents();
   }, []);
@@ -30,7 +31,7 @@ const StudentList: React.FC = () => {
     try {
       await deleteStudent(id);
       toast.success('Student deleted');
-      loadStudents(); // Refresh list
+      loadStudents(); 
     } catch (error) {
       toast.error('Failed to delete student');
     }
@@ -40,15 +41,15 @@ const StudentList: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Page Header */}
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-800">Students</h1>
-        <Button className="w-auto gap-2">
+        
+        {/* OPEN MODAL ON CLICK */}
+        <Button className="w-auto gap-2" onClick={() => setIsModalOpen(true)}>
           <Plus size={18} /> Add Student
         </Button>
       </div>
 
-      {/* Table Card */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
         <table className="w-full text-left">
           <thead className="bg-gray-50 border-b border-gray-200">
@@ -95,6 +96,13 @@ const StudentList: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* RENDER THE MODAL */}
+      <AddStudentModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        onSuccess={loadStudents} 
+      />
     </div>
   );
 };
