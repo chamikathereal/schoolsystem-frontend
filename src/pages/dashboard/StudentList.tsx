@@ -3,13 +3,16 @@ import { toast } from 'react-toastify';
 import { Plus, Trash2, Pencil } from 'lucide-react';
 import { getAllStudents, deleteStudent } from '../../api/students';
 import { Button } from '../../components/ui/Button';
+import StudentModal from './StudentModal'; // <--- UPDATED IMPORT NAME
 import type { Student } from '../../types';
-import AddStudentModal from './AddStudentModal';
 
 const StudentList: React.FC = () => {
   const [students, setStudents] = useState<Student[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false); // <--- ADD THIS STATE
+  
+  // Modal State
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedStudent, setSelectedStudent] = useState<Student | null>(null); // <--- NEW STATE
 
   useEffect(() => {
     loadStudents();
@@ -24,6 +27,16 @@ const StudentList: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleAdd = () => {
+    setSelectedStudent(null); // Clear previous selection
+    setIsModalOpen(true);
+  };
+
+  const handleEdit = (student: Student) => {
+    setSelectedStudent(student); // Set the student to edit
+    setIsModalOpen(true);        // Open the modal
   };
 
   const handleDelete = async (id: number) => {
@@ -44,8 +57,8 @@ const StudentList: React.FC = () => {
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-800">Students</h1>
         
-        {/* OPEN MODAL ON CLICK */}
-        <Button className="w-auto gap-2" onClick={() => setIsModalOpen(true)}>
+        {/* Use handleAdd instead of inline function */}
+        <Button className="w-auto gap-2" onClick={handleAdd}>
           <Plus size={18} /> Add Student
         </Button>
       </div>
@@ -75,9 +88,16 @@ const StudentList: React.FC = () => {
                   </span>
                 </td>
                 <td className="px-6 py-4 text-right space-x-2">
-                  <button className="text-gray-400 hover:text-blue-600 transition-colors">
+                  
+                  {/* EDIT BUTTON */}
+                  <button 
+                    onClick={() => handleEdit(student)} 
+                    className="text-gray-400 hover:text-blue-600 transition-colors"
+                  >
                     <Pencil size={18} />
                   </button>
+                  
+                  {/* DELETE BUTTON */}
                   <button 
                     onClick={() => handleDelete(student.id)}
                     className="text-gray-400 hover:text-red-600 transition-colors"
@@ -89,19 +109,13 @@ const StudentList: React.FC = () => {
             ))}
           </tbody>
         </table>
-        
-        {students.length === 0 && (
-          <div className="p-8 text-center text-gray-500">
-            No students found. Add one to get started!
-          </div>
-        )}
       </div>
 
-      {/* RENDER THE MODAL */}
-      <AddStudentModal 
+      <StudentModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
-        onSuccess={loadStudents} 
+        onSuccess={loadStudents}
+        studentToEdit={selectedStudent} // <--- PASS THE DATA
       />
     </div>
   );
