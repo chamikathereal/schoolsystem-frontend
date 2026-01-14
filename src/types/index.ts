@@ -22,3 +22,19 @@ export interface Student {
   dob?: string;
   age?: number;
 }
+
+// 4. Login Request
+// Add these to src/types/index.ts
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+// 5. Register Request
+export interface RegisterRequest {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  role: 'PRINCIPAL' | 'TEACHER';
+}
