@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { Plus, Trash2, Pencil } from 'lucide-react';
 import { getAllStudents, deleteStudent } from '../../api/students';
-import { Student } from '../../types';
 import { Button } from '../../components/ui/Button';
+import type { Student } from '../../types';
 
 const StudentList: React.FC = () => {
   const [students, setStudents] = useState<Student[]>([]);
