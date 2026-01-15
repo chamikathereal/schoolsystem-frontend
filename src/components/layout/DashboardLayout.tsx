@@ -26,7 +26,7 @@ const DashboardLayout: React.FC = () => {
           </div>
           <div className="flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-slate-800 rounded-lg cursor-pointer transition-colors">
             <LayoutDashboard size={20} />
-            <span className="font-medium">Teachers</span>
+            {/* <span className="font-medium">Teachers</span> */}
           </div>
         </nav>
 
