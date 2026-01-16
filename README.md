@@ -129,7 +129,7 @@ npm run dev
   <img src="https://github.com/chamikathereal.png" width="120" style="border-radius:50%" alt="Chamika Gayashan">
 
   <h3>Chamika Gayashan</h3>
-  <p><strong>Software Engineer | Java & React Specialist</strong></p>
+  <p><strong>Software Engineer | Java & React Developer</strong></p>
 
   <p><em>"Building digital experiences that matter."</em></p>
 
